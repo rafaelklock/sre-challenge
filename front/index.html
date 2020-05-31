@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title> What's ur preference?</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container"> 
+    <div>
+        <br/>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Início</a></li>
+              <li class="breadcrumb-item"><a href="#">delivery-much</a></li>
+              <li class="breadcrumb-item active" aria-current="page">sre-challenge (Rafael Klock)</li>
+            </ol>
+        </nav>
+
+        <h2>Qual é sua preferencia <span class="badge badge-secondary">?</span></h2>
+        <form action="/" method="POST">
+            <ul class="list-group">
+                <li class="list-group-item active">HTTP Servers:</li>
+                <li class="list-group-item">
+                    <input type="radio" id="nginx" name="preference" value="nginx" required>
+                    <label for="nginx">nginx</label>
+                </li>
+                <li class="list-group-item">
+                    <input type="radio" id="apache" name="preference" value="apache">
+                    <label for="apache">apache</label>
+                </li>
+                <li class="list-group-item">
+                    <input type="radio" id="lighttpd" name="preference" value="lighttpd">
+                    <label for="lighttpd">lighttpd</label>
+                </li>
+              </ul>
+            <br>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

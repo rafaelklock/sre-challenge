@@ -1,0 +1,56 @@
+version: '3'
+
+networks:
+    rede_db:
+    rede_frontend:
+
+services:
+    db:
+        image: mysql:5.7
+        env_file: '.env'
+        environment:
+            - MYSQL_DATABASE=$MYSQL_DATABASE_NAME
+            - MYSQL_USER=$MYSQL_USERNAME
+            - MYSQL_PASSWORD=$MYSQL_PASSWORD
+            - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+        volumes:
+            - ./mysql-files:/var/lib/mysql
+            - ./mysql/seed.sql:/docker-entrypoint-initdb.d/init.sql
+        networks: 
+            - rede_db
+        
+    back:
+        image: node:latest
+        env_file: '.env'
+        environment:
+            - MYSQL_DATABASE=$MYSQL_DATABASE_NAME
+            - MYSQL_USER=$MYSQL_USERNAME
+            - MYSQL_PASSWORD=$MYSQL_PASSWORD
+            - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+            - MYSQL_HOST=db
+            - SERVICE_PORT=3000
+        volumes:
+            - ./back:/backend
+        command: bash -c "sleep 35 && cd /backend && npm i && node index"
+        depends_on: 
+            - db
+        networks:
+            - rede_db
+            - rede_frontend
+    
+    front:
+        image: node
+        environment: 
+            BACKEND_HOST: back
+            BACKEND_PORT: '3000'
+            SERVICE_PORT: '3001'
+        volumes: 
+            - ./front:/front
+        ports:
+            - 80:3001
+        command: bash -c "cd /front && npm i && node index"
+        depends_on: 
+            - back
+            - db
+        networks: 
+            - rede_frontend
